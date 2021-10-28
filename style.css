@@ -1,0 +1,32 @@
+body {
+	background: #f0f2f5;
+}
+.navbar.bg-ahliya {
+	background: #670e0a;
+}
+.navbar .navbar-brand a {
+	color: #a38b30;
+}
+.navbar-text.text-date {
+	color: #c4bbba;
+}
+.widget {
+    position: relative;
+    padding: 20px;
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+    -webkit-box-shadow: 0 4px 6px 0 rgb(85 85 85 / 8%), 0 1px 20px 0 rgb(0 0 0 / 7%), 0px 1px 11px 0px rgb(0 0 0 / 7%);
+    -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 6px 0 rgb(85 85 85 / 8%), 0 1px 20px 0 rgb(0 0 0 / 7%), 0px 1px 11px 0px rgb(0 0 0 / 7%);
+}
+.widget .widget-heading {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 15px;
+}
+.feedback-error {	
+    width: 100%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: #dc3545;
+}

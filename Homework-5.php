@@ -1,7 +1,6 @@
 <?php
-
   // Total Time Spent on this assingment: 3.5 Hours
-
+  
   // Initialize variables
   $course_name = "PHP Course";
   $student_name = "Amir Alatrash";
@@ -119,13 +118,11 @@
               </tr>
               <tr>
                 <th>IP Address:</th>
-                <td><?= htmlentities($_POST["ip"]); ?></td>
-                <!-- Get the client IP -->
+                <td><?= htmlentities($_POST["ip"]); ?></td> <!-- Get the client IP -->
               </tr>
               <tr>
                 <th>Timestamp:</th>
-                <td><?= htmlentities($_POST["datestamp"]); ?>, <?= htmlentities($_POST["timestamp"]); ?></td>
-                <!-- Display the date and time when was the form submmited -->
+                <td><?= htmlentities($_POST["datestamp"]); ?>, <?= htmlentities($_POST["timestamp"]); ?></td> <!-- Display the date and time when was the form submmited -->
               </tr>
             </tbody>
           </table>

@@ -148,7 +148,7 @@
               <label for="feedback" class="col-sm-2 col-form-label">Feedback:</label>
               <div class="col-sm-10">
                 <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Please type your feedback about our services"></textarea>
-                <?php=$feedbackError;?>
+                <?=$feedbackError;?>
               </div>
             </div>
             <input type="hidden" name="ip" value="<?=$ipAddress?>"> <!-- Hidden input to get the client ip -->

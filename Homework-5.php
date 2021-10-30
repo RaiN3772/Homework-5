@@ -8,16 +8,68 @@
   date_default_timezone_set('Asia/Jerusalem'); # Set the default timezone to Jerusalem
   $current_date = date('m/d/Y'); # Month / Day / Year
   $current_time = date('h:i:sa'); # Hour : Minutes : Seconds AM/PM
-  $ip = $_SERVER['REMOTE_ADDR']; # Get client IP Address
+  $ipAddress = $_SERVER['REMOTE_ADDR']; # Get client IP Address
   
-  // Form variables #Errors
-  $nameError = "<span style='color: red; font-weight: bold;'>Name is required</span>";
-  $ageError = "<span style='color: red; font-weight: bold;'>Age is required</span>";
-  $emailError = "<span style='color: red; font-weight: bold;'>Email is required</span>";
-  $programmingError = "<span style='color: red; font-weight: bold;'>Choose your Programming Languages</span>";
-  $countryError = "<span style='color: red; font-weight: bold;'>Choose your Country</span>";
-  $feedbackError = "<span style='color: red; font-weight: bold;'>Please provide a feedback</span>";
+  // Form variables
   
+  $nameError = $emailError = $ageError = $programmingError = $countryError = $feedbackError = $ipError = NULL;
+  $full_name = $email = $age = $programming = $country = $feedback = $ip = $datestamp = $timestamp = NUll;
+  
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	  if (empty($_POST["full_name"])) {
+		  $nameError = "<span style='color: red; font-weight: bold;'>Name is required</span>";
+	  } else {
+		  $full_name = secure_input($_POST["full_name"]);
+		  }
+  
+	  if (empty($_POST["age"])) {
+		  $ageError = "<span style='color: red; font-weight: bold;'>Age is required</span>";
+	  } else {
+    $age = secure_input($_POST["age"]);
+		  }
+  
+	  if (empty($_POST["email"])) {
+		  $emailError = "<span style='color: red; font-weight: bold;'>Email is required</span>";
+	  } else {
+    $email = secure_input($_POST["email"]);
+		  }
+  
+	  if (empty($_POST["programming"])) {
+		  $programmingError = "<span style='color: red; font-weight: bold;'>Please select a field</span>";
+	  } else {
+    $programming = ($_POST["programming"]);
+		  }
+  
+	  if (empty($_POST["country"])) {
+		  $countryError = "<span style='color: red; font-weight: bold;'>Please select a Country</span>";
+	  } else {
+    $country = secure_input($_POST["country"]);
+		  }
+  
+	  if (empty($_POST["feedback"])) {
+		  $feedbackError = "<span style='color: red; font-weight: bold;'>Please provide a feedback</span>";
+	  } else {
+    $feedback = secure_input($_POST["feedback"]);
+		  }
+  
+	  if (empty($_POST["ip"])) {
+		  $ipError = "<script>alert('Stop playing with hidden fields!');</script>";
+	  } else {
+    $ip = secure_input($_POST["ip"]);
+		  }
+  
+	  $datestamp = secure_input($_POST["datestamp"]);
+	  $timestamp = secure_input($_POST["timestamp"]);
+  }
+  
+  function secure_input($data) {
+	  
+	  trim($data);					// Lets remove whitespace and other predefined characters from both sides of a string
+	  stripslashes($data);			// Lets remove backslashes
+	  htmlspecialchars($data);		// Lets convert some predefined characters to HTML entities; No html tags or scripts and sql injection
+	  
+	  return $data;
+  }
   ?>
 <html>
   <head>
@@ -35,123 +87,31 @@
       <div class="navbar-text text-date">Current Date: <span class="text-light"><?=$current_date?></span>, Current Time: <span class="text-light"><?=$current_time?></span></div> <!-- Display Current Time and Date -->
     </nav>
     <div class="container">
-      <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {?> <!-- IF the form was subbmited please show the information -->
-      <div class="widget mt-5">
-        <div class="widget-heading">
-          <h5>Your Information</h5>
-        </div>
-        <div class="widget-content">
-          <table class="table table-borderless">
-            <tbody>
-              <tr>
-                <th>Full Name:</th>
-                <td>
-                  <?= htmlentities($_POST["full_name"]); ?>				<!-- Display the name -->
-                  <?php if (empty($_POST["full_name"])) {	// if the input was empty please show an error
-                    echo ($nameError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>Age:</th>
-                <td>
-                  <?= htmlentities($_POST["age"]); ?>			<!-- Display the age -->
-                  <?php if (empty($_POST["age"])) { // if the input was empty please show an error
-                    echo ($ageError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>Email:</th>
-                <td>
-                  <?= htmlentities($_POST["email"]); ?> <!-- Display the email -->
-                  <?php if (empty($_POST["email"])) { // if the input was empty please show an error
-                    echo ($emailError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>Programming Languages:</th>
-                <td>
-                  <?php								// display the selected values with foreach loop
-                    $programming='';
-                    if (isset($_POST['programming'])) {
-                    	foreach ($_POST['programming'] as $value) {
-                    		$programming .= $value. ', ';
-                    	}
-                    }
-                    //Let's Remove the last comma
-                    $programming = substr(trim($programming),0,strlen($programming)-2);
-                    echo $programming;
-                    if (empty($_POST["programming"])) {	// if no selected values please show an error
-                    	echo ($programmingError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>Country:</th>
-                <td>
-                  <?php
-                    if(isset($_POST['country'])) { // Display the selected value
-                    $selected = $_POST['country'];
-                    echo $selected;
-                    }
-                    else if (empty($_POST["country"])) { // if no selected values please show an error
-                    	echo ($countryError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>Feedback:</th>
-                <td>
-                  <?= htmlentities($_POST["feedback"]); ?> <!-- Display the feedback -->
-                  <?php if (empty($_POST["feedback"])) { // if the input was empty please show an error
-                    echo ($feedbackError);
-                    }
-                    ?>
-                </td>
-              </tr>
-              <tr>
-                <th>IP Address:</th>
-                <td><?= htmlentities($_POST["ip"]); ?></td> <!-- Get the client IP -->
-              </tr>
-              <tr>
-                <th>Timestamp:</th>
-                <td><?= htmlentities($_POST["datestamp"]); ?>, <?= htmlentities($_POST["timestamp"]); ?></td> <!-- Display the date and time when was the form submmited -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <?php }
-        else { ?>
-      <div class="widget mt-5">
+      <div class="widget mt-5" id="contact-form">
         <div class="widget-heading">
           <h5>Contact Form</h5>
         </div>
         <div class="widget-content">
-          <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]);?>" method="post">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <div class="row mb-3">
               <label for="full_name" class="col-sm-2 col-form-label">Full Name:</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Please type your name" >
+                <?=$nameError;?>
               </div>
             </div>
             <div class="row mb-3">
               <label for="age" class="col-sm-2 col-form-label">Age:</label>
               <div class="col-sm-10">
                 <input type="number" class="form-control" id="age" name="age" placeholder="Please enter your age">
+                <?=$ageError;?>
               </div>
             </div>
             <div class="row mb-3">
               <label for="email" class="col-sm-2 col-form-label">Email:</label>
               <div class="col-sm-10">
                 <input type="email" class="form-control" id="email" name="email" placeholder="Please type your email" >
+                <?=$emailError;?>
               </div>
             </div>
             <fieldset class="row mb-3">
@@ -159,22 +119,17 @@
               <div class="col-sm-10">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="C++" id="cplusplus" name="programming[]">
-                  <label class="form-check-label" for="cplusplus">
-                  C++
-                  </label>
+                  <label class="form-check-label" for="cplusplus">C++</label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="Java" id="java" name="programming[]">
-                  <label class="form-check-label" for="java">
-                  Java
-                  </label>
+                  <label class="form-check-label" for="java">Java</label>
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="PHP" id="php" name="programming[]">
-                  <label class="form-check-label" for="php">
-                  PHP
-                  </label>
+                  <label class="form-check-label" for="php">PHP</label>
                 </div>
+                <?php=$programmingError;?>
               </div>
             </fieldset>
             <div class="row mb-3">
@@ -186,15 +141,18 @@
                   <option value="israel">Israel</option>
                   <option value="jordan">Jordan</option>
                 </select>
+                <?=$countryError;?>
               </div>
             </div>
             <div class="row mb-3">
               <label for="feedback" class="col-sm-2 col-form-label">Feedback:</label>
               <div class="col-sm-10">
-                <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Please type your feedback about our services"></textarea >
+                <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Please type your feedback about our services"></textarea>
+                <?php=$feedbackError;?>
               </div>
             </div>
-            <input type="hidden" name="ip" value="<?=$ip?>"> <!-- Hidden input to get the client ip -->
+            <input type="hidden" name="ip" value="<?=$ipAddress?>"> <!-- Hidden input to get the client ip -->
+            <?=$ipError;?>
             <input type="hidden" name="timestamp" value="<?=$current_time?>"> <!-- Hidden input to get the time -->
             <input type="hidden" name="datestamp" value="<?=$current_date?>"> <!-- Hidden input to get the date -->
             <div class="d-grid gap-2">
@@ -204,7 +162,69 @@
           </form>
         </div>
       </div>
+      <?php if ($_SERVER["REQUEST_METHOD"] == "POST") { ?>
+      <div class="widget mt-5 mb-5">
+        <div class="widget-heading">
+          <h5>Your Information</h5>
+        </div>
+        <div class="widget-content">
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th>Full Name:</th>
+                <td><?= $full_name;?></td>				<!-- Display the name -->
+              </tr>
+              <tr>
+                <th>Age:</th>
+                <td><?= $age;?></td>					<!-- Display the age -->
+              </tr>
+              <tr>
+                <th>Email:</th>
+                <td><?=$email;?></td>					<!-- Display the email -->
+              </tr>
+              <tr>
+                <th>Programming Languages:</th>
+                <td>
+                  <?php								// display the selected values with foreach loop
+                    $programming='';
+                    if (isset($_POST['programming'])) {
+                    	foreach ($_POST['programming'] as $value) {
+                    		$programming .= $value. ', ';
+                    	}
+                    }
+                    $programming = substr(trim($programming), 0, strlen($programming)-2);	//Let's Remove the last comma
+                    echo $programming;
+                    ?>
+                </td>
+              </tr>
+              <tr>
+                <th>Country:</th>
+                <td><?=$country;?></td>
+              </tr>
+              <tr>
+                <th>Feedback:</th>
+                <td><?=$feedback;?></td>	<!-- Display the feedback -->
+              </tr>
+              <tr>
+                <th>IP Address:</th>
+                <td><?=$ip;?></td>			<!-- Get the client IP -->
+              </tr>
+              <tr>
+                <th>Timestamp:</th>
+                <td><?=$datestamp;?>, <?=$timestamp;?></td> <!-- Display the date and time when was the form submitted -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <?php } ?>
     </div>
+    <?php
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {		// If the form was submitted and there is no errors, please hide the form using javascript
+      	if (is_null($nameError) && is_null($emailError) && is_null($ageError) && is_null($programmingError) && is_null($countryError) && is_null($feedbackError)) {
+      		echo "<script>document.getElementById('contact-form').style.display = 'none';</script>";
+      	}
+      }
+      ?>
   </body>
 </html>

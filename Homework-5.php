@@ -1,5 +1,4 @@
 <?php
-  // Total Time Spent on this assingment: 3.5 Hours
   
   // Initialize variables
   $course_name = "PHP Course";
@@ -96,21 +95,21 @@
             <div class="row mb-3">
               <label for="full_name" class="col-sm-2 col-form-label">Full Name:</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Please type your name" >
+                <input type="text" class="form-control" id="full_name" name="full_name" value="<?=$full_name;?>" placeholder="Please type your name" >
                 <?=$nameError;?>
               </div>
             </div>
             <div class="row mb-3">
               <label for="age" class="col-sm-2 col-form-label">Age:</label>
               <div class="col-sm-10">
-                <input type="number" class="form-control" id="age" name="age" placeholder="Please enter your age">
+                <input type="number" class="form-control" id="age" name="age" value="<?=$age;?>" placeholder="Please enter your age">
                 <?=$ageError;?>
               </div>
             </div>
             <div class="row mb-3">
               <label for="email" class="col-sm-2 col-form-label">Email:</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" name="email" placeholder="Please type your email" >
+                <input type="email" class="form-control" id="email" name="email" value="<?=$email;?>" placeholder="Please type your email" >
                 <?=$emailError;?>
               </div>
             </div>
@@ -129,7 +128,7 @@
                   <input class="form-check-input" type="checkbox" value="PHP" id="php" name="programming[]">
                   <label class="form-check-label" for="php">PHP</label>
                 </div>
-                <?php=$programmingError;?>
+                <?=$programmingError;?>
               </div>
             </fieldset>
             <div class="row mb-3">
@@ -147,7 +146,7 @@
             <div class="row mb-3">
               <label for="feedback" class="col-sm-2 col-form-label">Feedback:</label>
               <div class="col-sm-10">
-                <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Please type your feedback about our services"></textarea>
+                <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Please type your feedback about our services"><?=$feedback;?></textarea>
                 <?=$feedbackError;?>
               </div>
             </div>

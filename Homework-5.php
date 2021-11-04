@@ -135,10 +135,10 @@
               <label for="country" class="col-sm-2 col-form-label">Your Country:</label>
               <div class="col-sm-10">
                 <select class="form-select form-select-lg mb-3" name="country" aria-label="country">
-                  <option selected disabled>Choose...</option>
-                  <option value="Palestine">Palestine</option>
-                  <option value="israel">Israel</option>
-                  <option value="jordan">Jordan</option>
+                  <option selected disabled hidden>Choose...</option>
+                  <option value="Palestine" <?=$country == "Palestine" ? "selected" : "" ?>>Palestine</option>
+                  <option value="Israel" <?=$country == "Israel" ? "selected" : "" ?>>Israel</option>
+                  <option value="Jordan" <?=$country == "Jordan" ? "selected" : "" ?>>Jordan</option>
                 </select>
                 <?=$countryError;?>
               </div>
